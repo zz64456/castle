@@ -1,66 +1,27 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 前測實作
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## SOLID
+在這次 Laravel API 的實作中，我運用了 單一職責原則（SRP）、開放封閉原則（OCP）、里氏替換原則（LSP）、接口隔離原則（ISP） 和 依賴反轉原則（DIP），讓程式碼更加模塊化、可測試、易於維護和擴展。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+舉例：
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 單一職責原則
+>OrderController 主要負責處理訂單相關的 API 請求，而 CurrencyOrderRepository 則負責查詢訂單數據，而AddressRepository 只負責地址的查詢。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 開放封閉原則
+> CurrencyOrderRepository 使用了方法 getCurrencyOrderById, getTWDOrderDataById 等，這樣讓我之後只需要通過擴展 Repository 來新增不同貨幣類型的處理邏輯，而不需要修改現有的控制器。
 
-## Learning Laravel
+#### 里氏替換原則
+> 在我的實作中，CurrencyOrderRepository 是一個具體的類，實現了CurrencyOrderRepositoryInterface，提供了針對不同貨幣處理的邏輯。
+> 將來我想要替換或擴展這個功能，只要讓新的實現遵循相同的介面 CurrencyOrderRepositoryInterface，就可以在替換原本具體的實現而不影響系統的其他部分。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### 接口隔離原則
+> 我將不同的數據邏輯分開在 CurrencyOrderRepository 和 AddressRepository 中，每個 Repository 專門負責處理相應的數據操作。這樣的設計使得每個類只需要關心與其業務邏輯相關的功能，符合接口隔離原則。
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### 依賴反轉原則
+> OrderController 並不直接依賴具體的 CurrencyOrderRepository 類，而是依賴於抽象的 CurrencyOrderRepositoryInterface。控制器不需要知道具體的實現類，增加了靈活性和可測試性。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 設計模式
+關於設計模式，我理解得不夠多，這裡就先不寫上了。
+但真的感謝這次的機會，讓我明白還有哪些不足可以進步！
