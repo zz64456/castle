@@ -2,8 +2,9 @@
 namespace App\Repositories;
 
 use App\Models\currencyOrder;
+use App\Repositories\Contracts\CurrencyOrderRepositoryInterface;
 
-class CurrencyOrderRepository
+class CurrencyOrderRepository implements CurrencyOrderRepositoryInterface
 {
     public function getCurrencyOrderById($id)
     {

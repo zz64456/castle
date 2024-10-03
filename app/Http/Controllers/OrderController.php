@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Events\OrderCreated;
 use App\Http\Requests\OrderStoreRequest;
 use App\Repositories\AddressRepository;
-use App\Repositories\CurrencyOrderRepository;
+use App\Repositories\Contracts\CurrencyOrderRepositoryInterface;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    protected CurrencyOrderRepository $currencyOrderRepository;
-    public function __construct(CurrencyOrderRepository $currencyOrderRepository)
+    protected CurrencyOrderRepositoryInterface $currencyOrderRepository;
+    public function __construct(CurrencyOrderRepositoryInterface  $currencyOrderRepository)
     {
         $this->currencyOrderRepository = $currencyOrderRepository;
     }
