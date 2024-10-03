@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class OrderCreatedListener
 {
-    protected $addressRepository;
+    protected AddressRepository $addressRepository;
     /**
      * Create the event listener.
      */

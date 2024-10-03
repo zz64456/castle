@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    protected CurrencyOrderRepository $currencyOrderRepository;
+    public function __construct(CurrencyOrderRepository $currencyOrderRepository)
+    {
+        $this->currencyOrderRepository = $currencyOrderRepository;
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -41,7 +47,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $currencyOrder = CurrencyOrderRepository::getCurrencyOrderById($id);
+        $currencyOrder = $this->currencyOrderRepository->getCurrencyOrderById($id);
         
         if (empty($currencyOrder)) {
             return response()->json([
@@ -51,19 +57,19 @@ class OrderController extends Controller
         
         switch ($currencyOrder['currency']) {
             case 'TWD':
-                $orderData = CurrencyOrderRepository::getTWDOrderDataById($currencyOrder['id']);
+                $orderData = $this->currencyOrderRepository->getTWDOrderDataById($currencyOrder['id']);
                 break;
             case 'USD':
-                $orderData = CurrencyOrderRepository::getUSDOrderDataById($currencyOrder['id']);
+                $orderData = $this->currencyOrderRepository->getUSDOrderDataById($currencyOrder['id']);
                 break;
             case 'JPY':
-                $orderData = CurrencyOrderRepository::getJPYOrderDataById($currencyOrder['id']);
+                $orderData = $this->currencyOrderRepository->getJPYOrderDataById($currencyOrder['id']);
                 break;
             case 'RMB':
-                $orderData = CurrencyOrderRepository::getRMBOrderDataById($currencyOrder['id']);
+                $orderData = $this->currencyOrderRepository->getRMBOrderDataById($currencyOrder['id']);
                 break;
             case 'MYR':
-                $orderData = CurrencyOrderRepository::getMYROrderDataById($currencyOrder['id']);
+                $orderData = $this->currencyOrderRepository->getMYROrderDataById($currencyOrder['id']);
                 break;
             default:
                 break;
